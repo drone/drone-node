@@ -1,0 +1,19 @@
+{
+  "name": "drone-node",
+  "version": "1.0.0",
+  "description": "Node client for the Drone API",
+  "main": "lib/drone.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drone/drone-node.git"
+  },
+  "author": "Brad Rydzewski",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/drone/drone-node/issues"
+  },
+  "homepage": "https://github.com/drone/drone-node#readme"
+}
