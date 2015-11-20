@@ -2,9 +2,9 @@
   "name": "drone-node",
   "version": "1.0.0",
   "description": "Node client for the Drone API",
-  "main": "lib/drone.js",
+  "main": "lib/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "lab -a code -L"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/drone/drone-node/issues"
   },
-  "homepage": "https://github.com/drone/drone-node#readme"
+  "homepage": "https://github.com/drone/drone-node#readme",
+  "dependencies": {
+    "wreck": "^7.0.0"
+  },
+  "devDependencies": {
+    "code": "^2.0.1",
+    "lab": "^7.3.0"
+  }
 }
