@@ -9,6 +9,7 @@ build:
   environment:
     - DRONE_SERVER=http://127.0.0.1:8000
     - DRONE_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXh0Ijoib2N0b2NhdCIsInR5cGUiOiJ1c2VyIn0.JtytoXhBb829-8V3W3T6SiXIP_NabrtA9tALItuQyqw
+
 compose:
   drone:
     pull: true
@@ -18,3 +19,11 @@ compose:
       - REMOTE_CONFIG=https://github.com
       - DATABASE_DRIVER=sqlite3
       - DATABASE_CONFIG=/drone/test.db
+
+publish:
+  npm:
+    username: $$NPM_USERNAME
+    password: $$NPM_PASSWORD
+    email: $$NPM_EMAIL
+    when:
+      event: tag
