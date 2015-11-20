@@ -8,7 +8,7 @@ An API client is included in this package
 ```js
 const Drone = require('drone-node');
 
-const client = new Drone.client({ server: 'https://your.drone.server.com', token: 'SoMeToKeN' });
+const client = new Drone.Client({ server: 'https://your.drone.server.com', token: 'SoMeToKeN' });
 
 client.getRepos().then((repos) => {
 
@@ -30,8 +30,9 @@ Example usage:
 
 ```js
 const Drone = require('drone-node');
+const plugin = new Drone.Plugin();
 
-Drone.plugin.parse().then((params) => {
+plugin.parse().then((params) => {
 
   // gets build and repository information for
   // the current running build

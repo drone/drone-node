@@ -2,7 +2,7 @@
 
 const Drone = require('..');
 
-const client = new Drone.client({
+const client = new Drone.Client({
     url: process.env.DRONE_SERVER,
     token: process.env.DRONE_TOKEN
 });
