@@ -1,0 +1,20 @@
+build:
+  image: node:5.0.0
+  commands:
+    - apt-get -qq update
+    - apt-get -qq install sqlite3
+    - sqlite3 -init test/data.sql /drone/test.db
+    - npm install
+    - npm run test
+  environment:
+    - DRONE_SERVER=http://127.0.0.1:8000
+    - DRONE_TOKEN=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZXh0Ijoib2N0b2NhdCIsInR5cGUiOiJ1c2VyIn0.JtytoXhBb829-8V3W3T6SiXIP_NabrtA9tALItuQyqw
+compose:
+  drone:
+    pull: true
+    image: drone/drone:0.4
+    environment:
+      - REMOTE_DRIVER=github
+      - REMOTE_CONFIG=https://github.com
+      - DATABASE_DRIVER=sqlite3
+      - DATABASE_CONFIG=/drone/test.db
