@@ -8,7 +8,7 @@ An API client is included in this package
 ```js
 const Drone = require('drone-node');
 
-const client = new Drone.Client({ server: 'https://your.drone.server.com', token: 'SoMeToKeN' });
+const client = new Drone.Client({ url: 'https://your.drone.server.com', token: 'SoMeToKeN' });
 
 client.getRepos().then((repos) => {
 
