@@ -1,6 +1,10 @@
 # drone-node
 Node client for the Drone API
 
+## Deprecated
+
+**Note:** This repo is deprecated and is not receiving updates.  Please visit the new [drone-js repo](https://github.com/drone/drone-js)
+
 ## Client
 
 An API client is included in this package
