@@ -21,7 +21,7 @@ const client = new drone.Client({
 client.getRepos().then((res) => {
   console.log(res.data)
 }).catch((reason) => {
-    console.error(reason.response)
+  console.error(reason.response)
 })
 ```
 
@@ -34,7 +34,7 @@ Fork -> Patch -> Test -> Push -> Pull Request
 ## Authors
 
 * [Thomas Boerger](https://github.com/tboerger)
-* [Other contributors](https://github.com/drone/drone-ruby/graphs/contributors)
+* [Other contributors](https://github.com/drone/drone-node/graphs/contributors)
 
 ## License
 
