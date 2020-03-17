@@ -1,46 +1,47 @@
 # drone-node
+
+[![Build Status](http://cloud.drone.io/api/badges/drone/drone-node/status.svg)](http://cloud.drone.io/drone/drone-node)
+[![Gitter chat](https://badges.gitter.im/drone/drone.png)](https://gitter.im/drone/drone)
+[![Join the discussion at https://discourse.drone.io](https://img.shields.io/badge/discourse-forum-orange.svg)](https://discourse.drone.io)
+[![Drone questions at https://stackoverflow.com](https://img.shields.io/badge/drone-stackoverflow-orange.svg)](https://stackoverflow.com/questions/tagged/drone.io)
+[![npm version](https://badge.fury.io/js/drone-node.svg)](https://badge.fury.io/js/drone-node)
+
 Node client for the Drone API
 
-## Client
-
-An API client is included in this package
+## Example
 
 ```js
-const Drone = require('drone-node');
+const drone = require('drone-node')
 
-const client = new Drone.Client({ url: 'https://your.drone.server.com', token: 'SoMeToKeN' });
+const client = new drone.Client({
+  url: 'https://drone.example.com',
+  token: 'SoMeToKeN'
+})
 
-client.getRepos().then((repos) => {
-
-  // lists all the repos available to the authenticated user
-});
+client.getRepos().then((res) => {
+  console.log(res.data)
+}).catch((reason) => {
+    console.error(reason.response)
+})
 ```
 
-Many methods are available, until they're documented see [lib/index.js](lib/index.js) for details.
+Many functions are available, please read the source and jsdoc comments at [lib/index.js](./lib/index.js).
 
-## Plugins
+## Contributing
 
-This package provides utilities for creating [plugins](http://readme.drone.io/plugin/). Plugins are command-line programs invoked during the build process. Build information and plugin configuration is passed to the plugin as a command-line argument in JSON format:
+Fork -> Patch -> Test -> Push -> Pull Request
 
-```sh
-node run super_plugin.js -- '{ "build": {"number": 1, "status": "success"} }'
+## Authors
+
+* [Thomas Boerger](https://github.com/tboerger)
+* [Other contributors](https://github.com/drone/drone-ruby/graphs/contributors)
+
+## License
+
+Apache-2.0
+
+## Copyright
+
 ```
-
-Example usage:
-
-```js
-const Drone = require('drone-node');
-const plugin = new Drone.Plugin();
-
-plugin.parse().then((params) => {
-
-  // gets build and repository information for
-  // the current running build
-  const build = params.build;
-  const repo  = params.repo;
-
-  // gets plugin-specific parameters defined in
-  // the .drone.yml file
-  const vargs = params.vargs;
-});
+Copyright (c) 2020 Drone.io Developers
 ```

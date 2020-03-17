@@ -1,10 +1,11 @@
 {
   "name": "drone-node",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "Node client for the Drone API",
   "main": "lib/index.js",
   "scripts": {
-    "test": "lab -a code -L"
+    "lint": "eslint lib/ test/",
+    "test": "lab -C test/*.js"
   },
   "repository": {
     "type": "git",
@@ -17,11 +18,18 @@
   },
   "homepage": "https://github.com/drone/drone-node#readme",
   "dependencies": {
-    "joi": "^7.0.0",
-    "wreck": "^7.0.0"
+    "@hapi/joi": "^17.1.0",
+    "axios": "^0.19.2",
+    "querystring": "^0.2.0"
   },
   "devDependencies": {
-    "code": "^2.0.1",
-    "lab": "^7.3.0"
+    "@hapi/code": "^8.0.1",
+    "@hapi/lab": "^22.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-node": "^11.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1"
   }
 }
