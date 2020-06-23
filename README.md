@@ -19,9 +19,9 @@ const client = new drone.Client({
 })
 
 client.getRepos().then((res) => {
-  console.log(res.data)
+  console.log(res)
 }).catch((reason) => {
-  console.error(reason.response)
+  console.error(reason)
 })
 ```
 
