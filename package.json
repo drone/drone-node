@@ -19,7 +19,7 @@
   "homepage": "https://github.com/drone/drone-node#readme",
   "dependencies": {
     "@hapi/joi": "^17.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "querystring": "^0.2.0"
   },
   "devDependencies": {
