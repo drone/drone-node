@@ -29,7 +29,14 @@ Many functions are available, please read the source and jsdoc comments at [lib/
 
 ## Contributing
 
-Fork -> Patch -> Test -> Push -> Pull Request
+Fork -> Patch -> Lint -> Test -> Push -> Pull Request
+
+### Tests
+
+Tests are dependent on a running drone server. You can run them with the following command:
+```
+DRONE_SERVER=your_server DRONE_TOKEN=your_token yarn run test
+```
 
 ## Authors
 
