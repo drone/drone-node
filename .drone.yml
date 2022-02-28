@@ -8,12 +8,12 @@ platform:
 
 steps:
 - name: install
-  image: node:13.10-alpine
+  image: node:16.14-alpine
   commands:
   - yarn install --frozen-lockfile
 
 - name: lint
-  image: node:13.10-alpine
+  image: node:16.14-alpine
   commands:
   - yarn lint
 
