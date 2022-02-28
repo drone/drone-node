@@ -13,7 +13,7 @@ const client = new Drone.Client({
   token: process.env.DRONE_TOKEN
 })
 
-experiment('integration', async () => {
+experiment('integration', () => {
   it('can get the current user', async () => {
     const res = await client.getSelf()
     expect(res).to.be.an.object()
