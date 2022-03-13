@@ -17,6 +17,11 @@ steps:
   commands:
   - yarn lint
 
+- name: test
+  image: node:16.14-alpine
+  commands:
+  - yarn test
+
 - name: publish
   image: plugins/npm
   settings:
