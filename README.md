@@ -31,11 +31,19 @@ Many functions are available, please read the source and jsdoc comments at [lib/
 
 Fork -> Patch -> Lint -> Test -> Push -> Pull Request
 
-### Tests
+### Integration Tests
 
-Tests are dependent on a running drone server. You can run them with the following command:
+These tests are dependent on a running drone server. You can run them with the following command:
 ```
-DRONE_SERVER=your_server DRONE_TOKEN=your_token yarn run test
+DRONE_SERVER=your_server DRONE_TOKEN=your_token yarn run integration
+```
+
+### Unit Tests
+
+These will be run automatically with your PR. Ensure they pass before creating a PR.
+
+```
+yarn run test
 ```
 
 ## Authors

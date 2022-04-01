@@ -1,101 +1,70 @@
 'use strict'
-
+const sinon = require('sinon')
 const Code = require('@hapi/code')
 const Lab = require('@hapi/lab')
+const { ValidationError } = require('@hapi/joi')
 
 const { expect } = Code
-const { it, experiment } = exports.lab = Lab.script()
+const { it, experiment, beforeEach, afterEach } = exports.lab = Lab.script()
 
 const Drone = require('..')
 
 const client = new Drone.Client({
-  url: process.env.DRONE_SERVER,
-  token: process.env.DRONE_TOKEN
+  url: 'https://fakeurl.com',
+  token: 'fake-token'
 })
 
-experiment('integration', () => {
-  it('can get the current user', async () => {
-    const res = await client.getSelf()
-    expect(res).to.be.an.object()
-    expect(res).to.contain([
-      'id',
-      'login',
-      'email',
-      'machine',
-      'admin',
-      'active',
-      'avatar',
-      'syncing',
-      'synced',
-      'created',
-      'updated',
-      'last_login'
-    ])
+afterEach(() => sinon.restore())
+
+experiment('getRepos', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
+    client.getRepos(1, 300)
   })
 
-  it('can get recent builds', async () => {
-    const res = await client.recentBuilds()
-    expect(res).to.be.an.array()
-    if (res.length) {
-      res.forEach(r => {
-        expect(r).to.contain([
-          'id',
-          'uid',
-          'user_id',
-          'namespace',
-          'name',
-          'slug',
-          'scm',
-          'git_http_url',
-          'git_ssh_url',
-          'link',
-          'default_branch',
-          'private',
-          'visibility',
-          'active',
-          'config_path',
-          'trusted',
-          'protected',
-          'ignore_forks',
-          'ignore_pull_requests',
-          'auto_cancel_pull_requests',
-          'auto_cancel_pushes',
-          'timeout',
-          'counter',
-          'synced',
-          'created',
-          'updated',
-          'version'
-        ])
-        expect(r.build).to.contain([
-          'id',
-          'repo_id',
-          'trigger',
-          'number',
-          'status',
-          'event',
-          'action',
-          'link',
-          'timestamp',
-          'message',
-          'before',
-          'after',
-          'ref',
-          'source_repo',
-          'source',
-          'target',
-          'author_login',
-          'author_name',
-          'author_email',
-          'author_avatar',
-          'sender',
-          'started',
-          'finished',
-          'created',
-          'updated',
-          'version'
-        ])
-      })
+  it('sends the proper parameters to client', () => {
+    expect(
+      client._axios.get.lastCall.args
+    ).to.equal([
+      '/api/repos',
+      { params: { page: 1, per_page: 300 } }
+    ])
+  })
+})
+
+experiment('getBuilds', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
+  })
+
+  it('validates owner', () => {
+    let error = null
+    try {
+      client.getBuilds()
+    } catch (err) {
+      error = err
     }
+    expect(error).to.be.an.error(ValidationError, 'Must specify owner "value" is required')
+  })
+
+  it('validates repo', () => {
+    let error = null
+    try {
+      client.getBuilds('drone')
+    } catch (err) {
+      error = err
+    }
+    expect(error).to.be.an.error(ValidationError, 'Must specify repo "value" is required')
+  })
+
+  it('sends proper params to server', () => {
+    client.getBuilds('drone', 'drone-node', 2, 42)
+
+    expect(
+      client._axios.get.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds',
+      { params: { page: 2, per_page: 42 } }
+    ])
   })
 })
