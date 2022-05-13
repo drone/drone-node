@@ -331,3 +331,40 @@ experiment('retryBuild', () => {
     ])
   })
 })
+
+experiment('cancelBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'delete', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('cancelBuild')
+
+  it('sends proper params to server', () => {
+    client.cancelBuild('drone', 'drone-node', 42)
+
+    expect(
+      client._axios.delete.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/42'
+    ])
+  })
+})
+
+experiment('promoteBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'post', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('promoteBuild')
+
+  it('sends proper params to server', () => {
+    client.promoteBuild('drone', 'drone-node', 42, 'production', { owner: 'octocat' })
+
+    expect(
+      client._axios.post.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/42/promote',
+      'target=production&owner=octocat'
+    ])
+  })
+})
