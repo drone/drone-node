@@ -57,25 +57,6 @@ experiment('getRepos', () => {
   })
 })
 
-experiment('getBuilds', () => {
-  beforeEach(() => {
-    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
-  })
-
-  itValidatesRepoIdentification('getBuilds')
-
-  it('sends proper params to server', () => {
-    client.getBuilds('drone', 'drone-node', 2, 42)
-
-    expect(
-      client._axios.get.lastCall.args
-    ).to.equal([
-      '/api/repos/drone/drone-node/builds',
-      { params: { page: 2, per_page: 42 } }
-    ])
-  })
-})
-
 experiment('selfRepos', () => {
   beforeEach(() => {
     sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
@@ -237,6 +218,153 @@ experiment('updateRepo', () => {
     ).to.equal([
       '/api/repos/drone/drone-node',
       { visibility: 'find legit values' }
+    ])
+  })
+})
+
+experiment('incompleteBuilds', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
+  })
+
+  it('sends proper params to server', () => {
+    client.incompleteBuilds()
+
+    expect(
+      client._axios.get.lastCall.args
+    ).to.equal([
+      '/api/builds/incomplete'
+    ])
+  })
+})
+
+experiment('getBuilds', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('getBuilds')
+
+  it('sends proper params to server', () => {
+    client.getBuilds('drone', 'drone-node', 2, 42)
+
+    expect(
+      client._axios.get.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds',
+      { params: { page: 2, per_page: 42 } }
+    ])
+  })
+})
+
+experiment('purgeBuilds', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'delete', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('purgeBuilds')
+
+  it('sends proper params to server', () => {
+    client.purgeBuilds('drone', 'drone-node', 42)
+
+    expect(
+      client._axios.delete.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds',
+      { params: { before: 42 } }
+    ])
+  })
+})
+
+experiment('latestBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('latestBuild')
+
+  it('sends proper params to server', () => {
+    client.latestBuild('drone', 'drone-node', { ref: 'abc123', branch: 'feature-branch' })
+
+    expect(
+      client._axios.get.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/latest',
+      { params: { ref: 'abc123', branch: 'feature-branch' } }
+    ])
+  })
+})
+
+experiment('getBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'get', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('getBuild')
+
+  it('sends proper params to server', () => {
+    client.getBuild('drone', 'drone-node', 42)
+
+    expect(
+      client._axios.get.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/42'
+    ])
+  })
+})
+
+experiment('retryBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'post', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('retryBuild')
+
+  it('sends proper params to server', () => {
+    client.retryBuild('drone', 'drone-node', 42, { thing: 'mybuild' })
+
+    expect(
+      client._axios.post.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/42',
+      'thing=mybuild'
+    ])
+  })
+})
+
+experiment('cancelBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'delete', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('cancelBuild')
+
+  it('sends proper params to server', () => {
+    client.cancelBuild('drone', 'drone-node', 42)
+
+    expect(
+      client._axios.delete.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/42'
+    ])
+  })
+})
+
+experiment('promoteBuild', () => {
+  beforeEach(() => {
+    sinon.replace(client._axios, 'post', sinon.fake.returns('fake'))
+  })
+
+  itValidatesRepoIdentification('promoteBuild')
+
+  it('sends proper params to server', () => {
+    client.promoteBuild('drone', 'drone-node', 42, 'production', { owner: 'octocat' })
+
+    expect(
+      client._axios.post.lastCall.args
+    ).to.equal([
+      '/api/repos/drone/drone-node/builds/42/promote',
+      'target=production&owner=octocat'
     ])
   })
 })
