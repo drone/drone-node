@@ -1,40 +1,42 @@
 ---
 kind: pipeline
 name: testing
+type: vm
 
 platform:
   os: linux
   arch: amd64
 
+pool:
+  use: ubuntu
+
 steps:
-- name: install
-  image: node:16.14-alpine
-  commands:
-  - yarn install --frozen-lockfile
+  - name: install
+    image: node:16.14-alpine
+    commands:
+      - yarn install --frozen-lockfile
 
-- name: lint
-  image: node:16.14-alpine
-  commands:
-  - yarn lint
+  - name: lint
+    image: node:16.14-alpine
+    commands:
+      - yarn lint
 
-- name: test
-  image: node:16.14-alpine
-  commands:
-  - yarn test
+  - name: test
+    image: node:16.14-alpine
+    commands:
+      - yarn test
 
-- name: publish
-  image: plugins/npm
-  settings:
-    token:
-      from_secret: npmjs_token
-  when:
-    ref:
-    - refs/tags/**
+  - name: publish
+    image: plugins/npm
+    settings:
+      token:
+        from_secret: npmjs_token
+    when:
+      ref:
+        - refs/tags/**
 
 trigger:
   ref:
-  - refs/heads/master
-  - refs/tags/**
-  - refs/pull/**
-
-...
+    - refs/heads/master
+    - refs/tags/**
+    - refs/pull/**
